@@ -24,10 +24,10 @@ class ModalContents extends PolymerElement {
 
   newTask() {
     const newTask = {
-      assignedname__c: this.user,
+      assigned_name__c: this.user,
       title__c: this.title,
-      duedate__c: this.date,
-      taskdescription__c: this.description,
+      due_date__c: this.date,
+      description__c: this.description,
       status__c: "In Progress",
       color__c: "blue"
     }

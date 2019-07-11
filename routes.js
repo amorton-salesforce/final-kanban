@@ -5,7 +5,7 @@ module.exports = function (app) {
   app.get("/", (req, res) => res.sendFile("./build/es6-unbundled/index.html"));
 
   app.get('/api/tasks', function (req, res) {
-    const query = "SELECT Id, AssignedName__c, Title__c, TaskDescription__c, Status__c, DueDate__c, Color__c FROM Kanban__c";
+    const query = "SELECT Id, Assigned_Name__c, Title__c, Description__c, Status__c, Due_Date__c, Color__c FROM Kanban_Task__c";
 
     conn.query({ query }, (err, data) => {
 
@@ -18,12 +18,12 @@ module.exports = function (app) {
   });
 
   app.post('/api/tasks', function(req, res) {
-    const record = nforce.createSObject('Kanban__c');
-    record.set('AssignedName__c', req.body.assignedname__c);
+    const record = nforce.createSObject('Kanban_Task__c');
+    record.set('Assigned_Name__c', req.body.assigned_name__c);
     record.set('Title__c', req.body.title__c);
-    record.set('TaskDescription__c', req.body.taskdescription__c);
+    record.set('Description__c', req.body.description__c);
     record.set('Status__c', req.body.status__c);
-    record.set('DueDate__c', req.body.duedate__c);
+    record.set('Due_Date__c', req.body.due_date__c);
     record.set('Color__c', req.body.color__c);
   
     conn.insert({ sobject: record }, (err, resp) => {
@@ -36,7 +36,7 @@ module.exports = function (app) {
   });
 
   app.put('/api/tasks/:id', function(req, res) {
-    const record = nforce.createSObject('Kanban__c');
+    const record = nforce.createSObject('Kanban_Task__c');
     record.set('Id', req.params.id);
     record.set('Status__c', req.body.status__c);
   
