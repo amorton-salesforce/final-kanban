@@ -23,7 +23,7 @@ class KanbanContainer extends PolymerElement {
         <status-col heading="Backlog">
           <template is="dom-repeat" items="{{tasks}}" observe="status" filter="isBacklog">
           <task-card
-            id="[[item.id__c]]"
+            id="[[item.id]]"
             user="[[item.assigned_name__c]]"
             title="[[item.title__c]]"
             date="[[item.due_date__c]]"
@@ -37,7 +37,7 @@ class KanbanContainer extends PolymerElement {
         <status-col heading="In Progress">
           <template is="dom-repeat" items="{{tasks}}" observe="status" filter="isInProgress">
           <task-card
-            id="[[item.id__c]]"
+            id="[[item.id]]"
             user="[[item.assigned_name__c]]"
             title="[[item.title__c]]"
             date="[[item.due_date__c]]"
@@ -51,7 +51,7 @@ class KanbanContainer extends PolymerElement {
         <status-col heading="Complete">
           <template is="dom-repeat" items="{{tasks}}" observe="status" filter="isComplete">
           <task-card
-            id="[[item.id__c]]"
+            id="[[item.id]]"
             user="[[item.assigned_name__c]]"
             title="[[item.title__c]]"
             date="[[item.due_date__c]]"

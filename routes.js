@@ -5,7 +5,7 @@ module.exports = function (app) {
   app.get("/", (req, res) => res.sendFile("./build/es6-unbundled/index.html"));
 
   app.get('/api/tasks', function (req, res) {
-    const query = "SELECT Id, Assigned_Name__c, Title__c, Description__c, Status__c, Due_Date__c, Color__c FROM Kanban_Task__c";
+    const query = "SELECT Id, Assigned_Name__c, Name, Description__c, Status__c, Due_Date__c, Color__c FROM Kanban_Task__c";
 
     conn.query({ query }, (err, data) => {
 
@@ -20,7 +20,7 @@ module.exports = function (app) {
   app.post('/api/tasks', function(req, res) {
     const record = nforce.createSObject('Kanban_Task__c');
     record.set('Assigned_Name__c', req.body.assigned_name__c);
-    record.set('Title__c', req.body.title__c);
+    record.set('Name', req.body.title__c);
     record.set('Description__c', req.body.description__c);
     record.set('Status__c', req.body.status__c);
     record.set('Due_Date__c', req.body.due_date__c);
