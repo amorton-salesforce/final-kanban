@@ -196,10 +196,10 @@ class MainApp extends PolymerElement {
 
           <div class="progress-bar">
               <div class="empty-bar"></div>
-              <div class="fill-bar"></div>
+              <div class="fill-bar" style="width: {{fillbarWidth}}"></div>
               <div class="stats">
-                  <p><span class="highlight">25%</span> complete</p>
-                  <p>1 of 4 tasks complete</p>
+                  <p><span class="highlight">{{percentComplete}}%</span> complete</p>
+                  <p>{{countComplete}} of {{countTotal}} tasks complete</p>
               </div>
               <button class='btn' on-click="openModal">New Task</button>
           </div>
@@ -250,9 +250,22 @@ class MainApp extends PolymerElement {
     this.$.dataAjax.generateRequest();
   }
 
+  setPercentIndicator() {
+    const numTotal = this.tasks.length;
+    const numComplete = this.tasks.filter(task => task.status__c === "Complete").length;
+    const percentComplete = Math.round(numComplete / numTotal * 100);    
+    const fillbarWidth = Math.round((percentComplete / 100) * 20);
+    
+    this.set('countTotal', numTotal);
+    this.set('countComplete', numComplete);
+    this.set('percentComplete', percentComplete);
+    this.set('fillbarWidth', fillbarWidth + 'vw');
+  }
+
   handleResponse(event, res) {
     if ( this.$.dataAjax.method === "GET") {
       this.set('tasks', res.response);
+      this.setPercentIndicator();
     } else {
       this.getAll();
     }
