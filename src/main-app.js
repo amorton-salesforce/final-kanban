@@ -52,7 +52,7 @@ class MainApp extends PolymerElement {
         }
 
         .fill-bar {
-          width: 5vw;
+          width: 0vw;
           height: 3vh;
           background: linear-gradient(to right, #4787fb, #67dffd);
           border-radius: 15px;
@@ -253,7 +253,7 @@ class MainApp extends PolymerElement {
   setPercentIndicator() {
     const numTotal = this.tasks.length;
     const numComplete = this.tasks.filter(task => task.status__c === "Complete").length;
-    const percentComplete = Math.round(numComplete / numTotal * 100);    
+    const percentComplete = numTotal === 0 ? 0 : Math.round(numComplete / numTotal * 100);
     const fillbarWidth = Math.round((percentComplete / 100) * 20);
     
     this.set('countTotal', numTotal);
@@ -265,10 +265,10 @@ class MainApp extends PolymerElement {
   handleResponse(event, res) {
     if ( this.$.dataAjax.method === "GET") {
       this.set('tasks', res.response);
-      this.setPercentIndicator();
     } else {
       this.getAll();
     }
+    this.setPercentIndicator();
   }
 
   static get properties() {
@@ -284,6 +284,10 @@ class MainApp extends PolymerElement {
     super();
     this.url = "/api/tasks";
     this.id = "";
+    this.countTotal = 0;
+    this.countComplete = 0;
+    this.percentComplete = 0;
+    this.fillbarWidth = 0;
   }
 }
 
