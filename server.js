@@ -33,6 +33,7 @@ conn.authenticate({ username: process.env.SF_CLIENT_USERNAME,
   const taskAdded = client.subscribe({ topic: 'Task_Added__e', isEvent: true, replayId: -1 });
 
   taskAdded.on('data', function (data) {
+    console.log('Task added');
     console.log(data);
     socket.emit('task added', data);
   });
@@ -40,8 +41,17 @@ conn.authenticate({ username: process.env.SF_CLIENT_USERNAME,
   const taskUpdated = client.subscribe({ topic: 'Task_Updated__e', isEvent: true, replayId: -1 });
 
   taskUpdated.on('data', function (data) {
+    console.log('Task updated data');
     console.log(data);
     socket.emit('task updated', data);
+  });
+
+  const taskDeleted = client.subscribe({ topic: 'Task_Deleted__e', isEvent: true, replayId: -1 });
+
+  taskDeleted.on('data', function (data) {
+    console.log('Task deleted data');
+    console.log(data);
+    socket.emit('task deleted', data);
   });
 
 });
