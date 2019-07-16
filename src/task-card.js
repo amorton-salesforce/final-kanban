@@ -1,4 +1,5 @@
 import { PolymerElement, html } from "@polymer/polymer/polymer-element.js";
+import '@polymer/paper-button/paper-button.js';
 
 class TaskCard extends PolymerElement {
   static get template() {
@@ -106,7 +107,8 @@ class TaskCard extends PolymerElement {
                 <paper-item>In Progress</paper-item>
                 <paper-item>Complete</paper-item>
               </paper-listbox>
-            </paper-dropdown-menu>
+            </paper-dropdown-menu><br />
+            <paper-button raised on-click="handleDelete">Delete</paper-button>
         </section>
       </div>
     `;
@@ -129,6 +131,11 @@ class TaskCard extends PolymerElement {
       status__c: temp
     }
     const newEvent = new CustomEvent('status change', { detail: detail,  bubbles: true, composed: true });
+    this.dispatchEvent(newEvent);
+  }
+
+  handleDelete(event) {
+    const newEvent = new CustomEvent('delete task', { detail: {id: this.id}, bubbles: true, composed: true});
     this.dispatchEvent(newEvent);
   }
 
