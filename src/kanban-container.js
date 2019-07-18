@@ -21,7 +21,7 @@ class KanbanContainer extends PolymerElement {
           <task-card
             id="[[item.id]]"
             user="[[item.assigned_name__c]]"
-            title="[[item.title__c]]"
+            title="[[item.name]]"
             date="[[item.due_date__c]]"
             color="[[item.color__c]]"
           >
@@ -35,7 +35,7 @@ class KanbanContainer extends PolymerElement {
           <task-card
             id="[[item.id]]"
             user="[[item.assigned_name__c]]"
-            title="[[item.title__c]]"
+            title="[[item.name]]"
             date="[[item.due_date__c]]"
             color="[[item.color__c]]"
           >
@@ -49,7 +49,7 @@ class KanbanContainer extends PolymerElement {
           <task-card
             id="[[item.id]]"
             user="[[item.assigned_name__c]]"
-            title="[[item.title__c]]"
+            title="[[item.name]]"
             date="[[item.due_date__c]]"
             color="[[item.color__c]]"
           >
