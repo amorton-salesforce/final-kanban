@@ -1,8 +1,11 @@
 import { PolymerElement, html } from "@polymer/polymer/polymer-element.js";
 import '@polymer/paper-dialog/paper-dialog.js';
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
+import '@polymer/paper-item/paper-item.js';
+import '@polymer/paper-listbox/paper-listbox.js';
+import '@polymer/iron-ajax/iron-ajax.js';
 import './modal-contents.js';
 import './kanban-container.js';
-import '@polymer/iron-ajax/iron-ajax.js';
 
 class MainApp extends PolymerElement {
   static get template() {
@@ -39,6 +42,15 @@ class MainApp extends PolymerElement {
           right: 7vw;
           top: 4vh;
           color: #afb0c0;
+        }
+
+        .sort-option {
+          background-color: white;
+          position: absolute;
+          top: 100px;
+          left: 80px;
+          border-radius: 10px;
+          padding: 10px;
         }
 
         .empty-bar {
@@ -203,10 +215,20 @@ class MainApp extends PolymerElement {
               </div>
               <button class='btn' on-click="openModal">New Task</button>
           </div>
-      </header>
+
+      </header>          
+
+      <div class="sort-option">
+        <paper-dropdown-menu on-iron-select="changeSort" label="Sort Date" value="[[sort]]">
+          <paper-listbox slot="dropdown-content" class="dropdown-content">
+            <paper-item>Ascending</paper-item>
+            <paper-item>Descending</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
 
       <main class='board'>
-          <kanban-container tasks$="{{tasks}}" id="kanban"></kanban-container>
+          <kanban-container tasks$="{{tasks}}" sort="{{sort}}" id="kanban"></kanban-container>
       </main>
     `;
   }
@@ -258,6 +280,12 @@ class MainApp extends PolymerElement {
     this.$.dataAjax.method = "DELETE";
   }
 
+  changeSort(event) {
+    const temp = event.target.selectedItem.innerText;
+    console.log('Selected sort method: ' + temp);
+    this.set('sort', temp);
+  }
+
   getAll() {
     this.id = "";
     this.$.dataAjax.method = "GET";
@@ -290,7 +318,8 @@ class MainApp extends PolymerElement {
       tasks: Array,
       body: Object,
       url: String,
-      id: String
+      id: String,
+      sort: String
     }
   }
 
@@ -302,6 +331,7 @@ class MainApp extends PolymerElement {
     this.countComplete = 0;
     this.percentComplete = 0;
     this.fillbarWidth = 0;
+    this.sort = 'Ascending';
   }
 }
 
