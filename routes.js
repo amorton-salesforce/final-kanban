@@ -39,6 +39,7 @@ module.exports = function (app) {
     const record = nforce.createSObject('Kanban_Task__c');
     record.set('Id', req.params.id);
     record.set('Status__c', req.body.status__c);
+    record.set('Color__c', req.body.color__c);
   
     conn.update({ sobject: record }, (err, data) => {
       if (!err) {

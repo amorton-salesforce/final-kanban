@@ -218,7 +218,7 @@ class MainApp extends PolymerElement {
   ready() {
     super.ready();
     this.$.taskInputs.addEventListener('new task', event => this.addTask(event));
-    this.$.kanban.addEventListener('status change', event => this.statusChange(event));
+    this.$.kanban.addEventListener('task updated', event => this.statusChange(event));
     this.$.kanban.addEventListener('delete task', event => this.deleteTask(event));
 
     this.socket = io();
@@ -244,7 +244,10 @@ class MainApp extends PolymerElement {
   }
 
   statusChange(event) {
-    this.set('body', { status__c: event.detail.status__c });
+    let body = {};
+    if (event.detail.status__c) body.status__c = event.detail.status__c;
+    if (event.detail.color__c) body.color__c = event.detail.color__c;
+    this.set('body', body);
     this.id = event.detail.id;
     this.$.dataAjax.method = "PUT";
   }
